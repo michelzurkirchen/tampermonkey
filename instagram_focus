@@ -1,0 +1,31 @@
+// ==UserScript==
+// @name         Instagram Focus
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Sets focus to message textarea in DMs once you start typing. Currently works for the Dutch interface.
+// @author       You
+// @match        https://www.instagram.com/direct/inbox/
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Additional languages can be added to the TextField dictionary to support these languages.
+    
+    const textField = {
+     'nl': 'Chatbericht sturen...'
+    }
+
+    const lang = document.documentElement.lang;
+
+    window.addEventListener('keypress', function(e) {
+            let textareas = document.getElementsByTagName('textarea');
+            for (let i = 0; i < textareas.length; i++) {
+                if (textField[lang] == textareas[i].placeholder) {
+                    textareas[i].focus()
+                    break
+                }
+            }
+    })
+})();

@@ -1,0 +1,24 @@
+// ==UserScript==
+// @name         Facebook Blocker
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Redirects you to Duolingo if you have already visited Facebook today.
+// @author       Michel Zurkirchen
+// @match        https://www.facebook.com/
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    const date = new Date();
+    const today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+
+    if (window.localStorage.getItem('TMFB') == today) {
+        window.stop()
+        window.location.href = "https://www.duolingo.com/learn"
+    } else {
+    window.localStorage.setItem('TMFB', today);
+
+    }
+})();

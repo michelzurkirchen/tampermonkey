@@ -1,0 +1,33 @@
+// ==UserScript==
+// @name         Instagram Enter
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Changes functionality of 'Enter' in DM's to 'send message'. Currently works for the Dutch interface.
+// @author       Michel Zurkirchen
+// @match        https://www.instagram.com/direct/inbox/
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Additional languages can be added to the sendText dictionary to support these languages.
+    const sendText = {
+     'nl': 'Verzenden'
+    }
+
+    const lang = document.documentElement.lang;
+
+    window.addEventListener('keypress', function(e) {
+        if (e.key == 'Enter') {
+            let buttons = document.getElementsByTagName('button');
+            for (let i = 0; i < buttons.length; i++) {
+                if (sendText[lang] == buttons[i].innerText) {
+                    buttons[i].click()
+                    e.preventDefault()
+                    break
+                }
+            }
+        }
+    })
+})();
